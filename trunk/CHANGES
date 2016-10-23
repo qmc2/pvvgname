@@ -1,0 +1,11 @@
+v1.1 / 23-OCT-2016
+
+- Changed the default PREFIX for 'make install' to /usr/local
+- Improved handling of command line options through getopt_long()
+- Improved LVM2 PV detection by scanning for "LABELONE" within the
+  first four sectors
+- Added this CHANGES file
+
+v1.0 / 19-OCT-2016
+
+- Initial version
