@@ -1,0 +1,107 @@
+pvvgname - v1.1
+---------------
+
+This utility reads the name of the Linux LVM2 volume group (VG) that a physical
+volume (PV) belongs to directly from the metadata area (MDA) stored on disk,
+and prints it to stdout.
+
+Building and installing
+-----------------------
+
+All you need to build the program is gcc and make. Then just run
+
+$ make
+
+to create the binary (pvvgname), followed by
+
+$ sudo make install
+
+to "install" it. The binary will be copied to /usr/local/sbin because of the
+default PREFIX, which is /usr/local. If you want to install it elsewhere,
+specify a different PREFIX.
+
+For example
+
+$ sudo make install PREFIX=/usr
+
+would install it to /usr/sbin instead.
+
+Usage
+-----
+
+As pvvgname opens the respective (block) device directly it has to be run as
+root, or via sudo. Example:
+
+$ sudo pvdisplay /dev/sdc
+  --- Physical volume ---
+  PV Name               /dev/sdc
+  VG Name               data
+  PV Size               3,64 TiB / not usable 2,82 MiB
+  Allocatable           yes 
+  PE Size               4,00 MiB
+  Total PE              953861
+  Free PE               429573
+  Allocated PE          524288
+  PV UUID               rnML2E-nc2n-R4gy-9GEA-pJbU-JngR-jF4GwJ
+
+$ sudo pvvgname /dev/sdc
+data
+
+If you run the tool on a block device that is no LVM2 PV, pvvgname will spit
+a corresponding error:
+
+$ sudo pvvgname /dev/sdd
+ERROR: /dev/sdd doesn't appear to be an LVM2 physical volume
+
+Alternatively, if LVM2 metadata exists on the device (which makes it a PV as per
+definition) but it's not part of a VG, pvvgname will return an empty string (and
+return code 0).
+
+Shell return codes
+------------------
+
+0 - No error
+
+    The VG name is printed to stdout. Note that it can be empty if the PV is
+    currently not part of a VG.
+
+1 - Some error occurred
+
+    An error message is printed to stderr.
+
+What is it good for?
+--------------------
+
+Well, there are situations where pvdisplay doesn't work correctly. Huh?!
+
+The case that we stumbled upon was with duplice PV UUID caused by LUN cloning
+in the storage back-end. An easy/standard way of still finding out which PV
+belongs to which VG doesn't seem to exist in such a case, which was the initial
+motivation for writing this tool (since we needed this information badly within
+an automated VG cloning operation).
+
+Because we read the LVM2 metadata directly from the block device - without
+having to take the actual VG structure into account - we can still get to that
+information although LVM2's commands (pvdisplay et al.) are confused.
+
+License
+-------
+
+Copyright (C) 2016 SVA System Vertrieb Alexander GmbH
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program. If not, see <http://www.gnu.org/licenses/>.
+
+Author
+------
+
+René Reucher (rene.reucher@sva.de)
