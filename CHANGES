@@ -1,3 +1,9 @@
+v1.3 / 04-NOV-2016
+
+- Added support for processing multiple block devices in one call
+- Added --long (-l) option for long output (including the block
+  device name)
+
 v1.2 / 04-NOV-2016
 
 - Code clean up for better readability

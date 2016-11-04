@@ -25,17 +25,20 @@
 #define FMTT_MAGIC 	"\040\114\126\115\062\040\170\133\065\101\045\162\060\116\052\076" // from LVM2's source (lib/format-text/layout.h)
 #define LABEL_ONE	"LABELONE"
 
-char *block_device_name = 0;
+char long_output = 0;
+char **block_device_names = 0;
+int number_of_block_devices = 0;
 
 static struct option long_options[] = {
 	{"help",	no_argument,	0,	'h'},
 	{"version",	no_argument,	0,	'v'},
+	{"long",	no_argument,	0,	'l'},
 	{0,		0,		0,	0}
 };
 
 void show_usage(char **argv)
 {
-	fprintf(stderr, "Usage: %s <device>\n"
+	fprintf(stderr, "Usage: %s [-l|--long] <device> [<device> ...]\n"
 			"       %s [-h|--help] [-v|--version]\n", argv[0], argv[0]);
 }
 
@@ -47,8 +50,12 @@ void show_version()
 int process_arguments(int argc, char **argv)
 {
 	int c, option_index, retval = 1;
-	while ( retval && (c = getopt_long(argc, argv, "hv", long_options, &option_index)) != -1 ) {
+	while ( retval && (c = getopt_long(argc, argv, "hvl", long_options, &option_index)) != -1 ) {
 		switch ( c ) {
+			case 'l':
+				long_output = 1;
+				break;
+
 			case 'h':
 				show_usage(argv);
 				return 0;
@@ -61,9 +68,15 @@ int process_arguments(int argc, char **argv)
 				break;
 		}
 	}
-	if ( optind < argc ) {
-		block_device_name = (char *)malloc(sizeof(char) * strlen(argv[optind]) + 1);
-		strcpy(block_device_name, argv[optind]);
+	number_of_block_devices = argc - optind;
+	if ( number_of_block_devices > 0 ) {
+		block_device_names = (char **)malloc(sizeof(char *) * number_of_block_devices);
+		int index = optind;
+		while ( index < argc ) {
+			block_device_names[index - optind] = (char *)malloc(sizeof(char) * strlen(argv[index]) + 1);
+			strcpy(block_device_names[index - optind], argv[index]);
+			index++;
+		}
 		return 1;
 	} else {
 		show_usage(argv);
@@ -71,51 +84,61 @@ int process_arguments(int argc, char **argv)
 	}
 }
 
-int clean_up(int rc)
+void clean_up()
 {
-	if ( block_device_name )
-		free(block_device_name);
-	return rc;
+	if ( block_device_names ) {
+		for (int i = 0; i < number_of_block_devices; i++)
+			free(block_device_names[i]);
+		free(block_device_names);
+	}
 }
 
 int main(int argc, char **argv)
 {
-	if ( !process_arguments(argc, argv) )
-		return clean_up(1);
-	FILE *f = fopen(block_device_name, "r");
-	if ( f ) {
-		char buffer[BUFFER_SIZE];
-		int len = fread(buffer, 1, BUFFER_SIZE, f);
-		fclose(f);
-		if ( len > 0 ) {
-			char *labelone = memmem(buffer, FIRST4SECTORS, LABEL_ONE, strlen(LABEL_ONE));
-			char *magic = memmem(buffer, BUFFER_SIZE, FMTT_MAGIC, strlen(FMTT_MAGIC));
-			if ( !labelone || !magic ) {
-				fprintf(stderr, "ERROR: %s doesn't appear to be an LVM2 physical volume\n", block_device_name);
-				return clean_up(1);
-			}
-			unsigned int offset = UINT32(buffer + VGN_OFFSET);
-			if ( offset > 0 ) {
-				char *p = buffer + offset + MDA_OFFSET;
-				char *q = p;
-				while ( *q != ' ' )
-					q++;
-				int vg_name_len = q - p;
-				if ( vg_name_len >= 0 ) {
-					char vg_name[vg_name_len + 1];
-					strncpy(vg_name, p, vg_name_len);
-					vg_name[vg_name_len] = 0;
-					printf("%s\n", vg_name);
-				} else
-					printf("\n");
-			}
-			return clean_up(0);
-		} else {
-			fprintf(stderr, "ERROR: fread() failed\n");
-			return clean_up(1);
-		}
-	} else {
-		fprintf(stderr, "ERROR: fopen() failed\n");
-		return clean_up(1);
+	if ( !process_arguments(argc, argv) ) {
+		clean_up();
+		return 1;
 	}
+	int rc = 0;
+	for (int index = 0; index < number_of_block_devices; index++) {
+		FILE *f = fopen(block_device_names[index], "r");
+		if ( f ) {
+			char buffer[BUFFER_SIZE];
+			int len = fread(buffer, 1, BUFFER_SIZE, f);
+			fclose(f);
+			if ( len > 0 ) {
+				char *labelone = memmem(buffer, FIRST4SECTORS, LABEL_ONE, strlen(LABEL_ONE));
+				char *magic = memmem(buffer, BUFFER_SIZE, FMTT_MAGIC, strlen(FMTT_MAGIC));
+				if ( !labelone || !magic ) {
+					fprintf(stderr, "ERROR: %s doesn't appear to be an LVM2 physical volume\n", block_device_names[index]);
+					rc = 1;
+				}
+				unsigned int offset = UINT32(buffer + VGN_OFFSET);
+				if ( offset > 0 ) {
+					char *p = buffer + offset + MDA_OFFSET;
+					char *q = p;
+					while ( *q != ' ' )
+						q++;
+					int vg_name_len = q - p;
+					if ( vg_name_len >= 0 ) {
+						char vg_name[vg_name_len + 1];
+						strncpy(vg_name, p, vg_name_len);
+						vg_name[vg_name_len] = 0;
+						if ( long_output )
+							printf("%s\t%s\n", block_device_names[index], vg_name);
+						else
+							printf("%s\n", vg_name);
+					}
+				}
+			} else {
+				fprintf(stderr, "ERROR: fread() failed for %s\n", block_device_names[index]);
+				rc = 1;
+			}
+		} else {
+			fprintf(stderr, "ERROR: fopen() failed for %s\n", block_device_names[index]);
+			rc = 1;
+		}
+	}
+	clean_up();
+	return rc;
 }
