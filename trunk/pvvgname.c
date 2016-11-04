@@ -112,22 +112,23 @@ int main(int argc, char **argv)
 				if ( !labelone || !magic ) {
 					fprintf(stderr, "ERROR: %s doesn't appear to be an LVM2 physical volume\n", block_device_names[index]);
 					rc = 1;
-				}
-				unsigned int offset = UINT32(buffer + VGN_OFFSET);
-				if ( offset > 0 ) {
-					char *p = buffer + offset + MDA_OFFSET;
-					char *q = p;
-					while ( *q != ' ' )
-						q++;
-					int vg_name_len = q - p;
-					if ( vg_name_len >= 0 ) {
-						char vg_name[vg_name_len + 1];
-						strncpy(vg_name, p, vg_name_len);
-						vg_name[vg_name_len] = 0;
-						if ( long_output )
-							printf("%s\t%s\n", block_device_names[index], vg_name);
-						else
-							printf("%s\n", vg_name);
+				} else {
+					unsigned int offset = UINT32(buffer + VGN_OFFSET);
+					if ( offset > 0 ) {
+						char *p = buffer + offset + MDA_OFFSET;
+						char *q = p;
+						while ( *q != ' ' )
+							q++;
+						int vg_name_len = q - p;
+						if ( vg_name_len >= 0 ) {
+							char vg_name[vg_name_len + 1];
+							strncpy(vg_name, p, vg_name_len);
+							vg_name[vg_name_len] = 0;
+							if ( long_output )
+								printf("%s\t%s\n", block_device_names[index], vg_name);
+							else
+								printf("%s\n", vg_name);
+						}
 					}
 				}
 			} else {
