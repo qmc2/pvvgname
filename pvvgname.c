@@ -100,10 +100,14 @@ int main(int argc, char **argv)
 				char *q = p;
 				while ( *q != ' ' )
 					q++;
-				char vgname[(q - p) + 1];
-				strncpy(vgname, p, q - p);
-				vgname[q - p] = 0;
-				printf("%s\n", vgname);
+				int vg_name_len = q - p;
+				if ( vg_name_len >= 0 ) {
+					char vg_name[vg_name_len + 1];
+					strncpy(vg_name, p, vg_name_len);
+					vg_name[vg_name_len] = 0;
+					printf("%s\n", vg_name);
+				} else
+					printf("\n");
 			}
 			return clean_up(0);
 		} else {
