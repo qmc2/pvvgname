@@ -28,4 +28,4 @@ clean:
 distclean: clean
 
 dist: distclean
-	cd .. && $(TAR) -c -f - $(SOURCE_FOLDER) | bzip2 -9 > pvvgname-$(VERSION).tar.bz2 && cd $(SOURCE_FOLDER)
+	cd .. && $(TAR) --exclude-vcs -c -f - $(SOURCE_FOLDER) | bzip2 -9 > pvvgname-$(VERSION).tar.bz2 && cd $(SOURCE_FOLDER)

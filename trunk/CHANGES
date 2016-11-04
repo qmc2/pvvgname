@@ -1,6 +1,8 @@
 v1.2 / 04-NOV-2016
 
 - Code clean up for better readability
+- Changed 'make dist' to exclude SVN control files from the tar
+  archive
 
 v1.1 / 23-OCT-2016
 
