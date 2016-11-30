@@ -74,7 +74,7 @@ What is it good for?
 
 Well, there are situations where pvdisplay doesn't work correctly. Huh?!
 
-The case that we stumbled upon was with duplice PV UUID caused by LUN cloning
+The case that we stumbled upon was with duplice PV UUIDs caused by LUN cloning
 in the storage back-end. An easy/standard way of still finding out which PV
 belongs to which VG doesn't seem to exist in such a case, which was the initial
 motivation for writing this tool (since we needed this information badly within
