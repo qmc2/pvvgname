@@ -74,20 +74,21 @@ What is it good for?
 
 Well, there are situations where pvdisplay doesn't work correctly. Huh?!
 
-The case that we stumbled upon was with duplice PV UUIDs caused by LUN cloning
-in the storage back-end. An easy/standard way of still finding out which PV
+The case that we stumbled upon was with duplicate PV UUIDs caused by LUN cloning
+in the storage back-end. An easy / standard way of still finding out which PV
 belongs to which VG doesn't seem to exist in such a case, which was the initial
 motivation for writing this tool (since we needed this information badly within
 an automated VG cloning operation).
 
-Because we read the LVM2 metadata directly from the block device - without
-having to take the actual VG structure into account - we can still get to that
-information although LVM2's commands (pvdisplay et al.) are confused.
+Because pvvgname reads the LVM2 meta-data directly from the block device without
+taking any actual VG structures into account it can still get to the wanted VG
+information by following the on-disk MDA structure, although LVM2's commands
+(like pvdisplay for example) are greatly confused.
 
 License
 -------
 
-Copyright (C) 2016 SVA System Vertrieb Alexander GmbH
+Copyright (C) 2016-2017 SVA System Vertrieb Alexander GmbH
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
