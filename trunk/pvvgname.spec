@@ -1,5 +1,5 @@
 # Spec file for package 'pvvgname'
-# Copyright (c) 2016 SVA System Vertrieb Alexander GmbH
+# Copyright (c) 2016-2017 SVA System Vertrieb Alexander GmbH
 
 Name:		pvvgname
 Version:	1.4
