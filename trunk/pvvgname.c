@@ -2,7 +2,7 @@
 // pvvgname - reads the name of the VG that a PV belongs to
 //            directly from the MDA stored on disk
 //
-// Copyright (C) 2016-2017 SVA System Vertrieb Alexander GmbH
+// Copyright (C) 2016-2018 SVA System Vertrieb Alexander GmbH
 //
 // Author: René Reucher (rene.reucher@sva.de)
 // **********************************************************
