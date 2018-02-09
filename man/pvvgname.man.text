@@ -1,0 +1,40 @@
+NAME
+  pvvgname - find the name of the volume group (VG) that a physical volume (PV) belongs to
+
+SYNOPSIS
+  pvvgname [-l|--long] device [device ...]
+
+  pvvgname [-h|--help] [-v|--version]
+
+DESCRIPTION
+  This simple utility reads the name of the Linux LVM2 volume groups (VGs) that one or more physical
+  volumes (PVs) belong to directly from their metadata areas stored on disk, and prints their names
+  to stdout. PVs are specified as device paths, for example /dev/sdc, /dev/mapper/mpatha or /dev/sd*.
+
+  Note that because pvvgname has to read from the given (block) devices directly, it has to be run as
+  root or via sudo.
+
+EXIT STATUS
+  0 - No error: The VG name is printed to stdout. The name can be empty if the PV is not
+  currently part of a VG.
+
+  1 - Some error occurred: An error message is be printed to stderr.
+
+OPTIONS
+  -l|--long  Enables long output, that is, print the device path before the volume group name
+             (separated by a tab-character)
+
+  -h|--help  Prints the usage help and exits
+
+  -v|--version  Prints the pvvgname version and exits
+
+SEE ALSO
+  lvm(8)
+
+BUGS
+  None that we're aware of. Report any bugs you may find to the author's e-mail address below.
+
+AUTHOR
+  René Reucher (rene.reucher@sva.de)
+
+  Project homepage: https://sourceforge.net/projects/pvvgname/

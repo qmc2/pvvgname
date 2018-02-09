@@ -1,3 +1,8 @@
+v1.5 / 09-FEB-2018
+
+- Added a manual page (section 8) and scripts for automatic man
+  page creation
+
 v1.4 / 14-AUG-2017
 
 - Fixed pre-C99 compile issues

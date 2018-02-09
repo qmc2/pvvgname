@@ -1,4 +1,4 @@
-pvvgname - v1.4
+pvvgname - v1.5
 ---------------
 
 This utility reads the name of the Linux LVM2 volume group (VG) that a physical
@@ -88,7 +88,7 @@ information by following the on-disk MDA structure, although LVM2's commands
 License
 -------
 
-Copyright (C) 2016-2017 SVA System Vertrieb Alexander GmbH
+Copyright (C) 2016-2018 SVA System Vertrieb Alexander GmbH
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software

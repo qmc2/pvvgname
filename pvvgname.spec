@@ -1,8 +1,8 @@
 # Spec file for package 'pvvgname'
-# Copyright (c) 2016-2017 SVA System Vertrieb Alexander GmbH
+# Copyright (c) 2016-2018 SVA System Vertrieb Alexander GmbH
 
 Name:		pvvgname
-Version:	1.4
+Version:	1.5
 Release:	1
 License:	GPL-3.0
 Summary:	Reads the name of the VG that a PV belongs to directly from the MDA stored on disk 
@@ -32,3 +32,4 @@ popd
 %defattr(-,root,root)
 %doc %{name}/README %{name}/COPYING %{name}/CHANGES
 %{_sbindir}/pvvgname
+%{_mandir}/man8/pvvgname.8.gz
