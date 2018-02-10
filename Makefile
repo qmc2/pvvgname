@@ -1,4 +1,4 @@
-VERSION = 1.5
+VERSION = 1.6
 ARCH = $(shell uname -m)
 CC = gcc
 CP = cp
@@ -19,7 +19,7 @@ all: pvvgname
 pvvgname: pvvgname.c
 	$(CC) pvvgname.c -DPVVGNAME_VERSION=$(VERSION) -o pvvgname
 
-install: doc pvvgname
+install: pvvgname doc
 	$(MKDIR) $(INSTPATH_SBIN)
 	$(CP) pvvgname $(INSTPATH_SBIN)/pvvgname
 	$(MKDIR) $(INSTPATH_MAN)

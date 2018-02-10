@@ -1,5 +1,5 @@
 NAME
-  pvvgname - find the name of the volume group (VG) that a physical volume (PV) belongs to
+  pvvgname - finds the name of the volume group that physical volumes belongs to
 
 SYNOPSIS
   pvvgname [-l|--long] device [device ...]
@@ -18,7 +18,7 @@ EXIT STATUS
   0 - No error: The VG name is printed to stdout. The name can be empty if the PV is not
   currently part of a VG.
 
-  1 - Some error occurred: An error message is be printed to stderr.
+  1 - Some error occurred: An error message is printed to stderr.
 
 OPTIONS
   -l|--long  Enables long output, that is, print the device path before the volume group name
