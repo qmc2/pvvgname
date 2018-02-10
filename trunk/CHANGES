@@ -1,3 +1,8 @@
+v1.7 / 10-FEB-2018
+
+- Long output (-l / --long) will now also print the VG UUID (third
+  column)
+
 v1.6 / 10-FEB-2018
 
 - Manual page corrections
