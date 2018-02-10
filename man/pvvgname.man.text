@@ -21,8 +21,8 @@ EXIT STATUS
   1 - Some error occurred: An error message is printed to stderr.
 
 OPTIONS
-  -l|--long  Enables long output, that is, print the device path before the volume group name
-             (separated by a tab-character)
+  -l|--long  Enables long output, that is, pvvgname prints the device path followed by the VG name
+	     followed by the VG UUID (separated by tab-characters)
 
   -h|--help  Prints the usage help and exits
 

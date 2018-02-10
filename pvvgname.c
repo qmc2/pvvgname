@@ -126,9 +126,16 @@ int main(int argc, char **argv)
 							char vg_name[vg_name_len + 1];
 							strncpy(vg_name, p, vg_name_len);
 							vg_name[vg_name_len] = 0;
-							if ( long_output )
-								printf("%s\t%s\n", block_device_names[index], vg_name);
-							else
+							if ( long_output ) {
+								while ( *q++ != '\"' );
+								p = q;
+								while ( *q != '\"' ) q++;
+								int vg_uuid_len = q - p;
+								char vg_uuid[vg_uuid_len + 1];
+								strncpy(vg_uuid, p, vg_uuid_len);
+								vg_uuid[vg_uuid_len] = 0;
+								printf("%s\t%s\t%s\n", block_device_names[index], vg_name, vg_uuid);
+							} else
 								printf("%s\n", vg_name);
 						}
 					}
