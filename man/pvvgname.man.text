@@ -1,5 +1,5 @@
 NAME
-  pvvgname - finds the name of the volume group that physical volumes belongs to
+  pvvgname - finds the names of the volume groups that physical volumes belong to
 
 SYNOPSIS
   pvvgname [-l|--long] device [device ...]
@@ -7,12 +7,22 @@ SYNOPSIS
   pvvgname [-h|--help] [-v|--version]
 
 DESCRIPTION
-  This simple utility reads the name of the Linux LVM2 volume groups (VGs) that one or more physical
-  volumes (PVs) belong to directly from their metadata areas stored on disk, and prints their names
-  to stdout. PVs are specified as device paths, for example /dev/sdc, /dev/mapper/mpatha or /dev/sd*.
+  This simple utility reads the names of the Linux LVM2 volume groups (VGs) that one or more physical
+  volumes (PVs) belong to directly from their metadata areas (MDAs) stored on disk, and prints their
+  names to stdout.
+  
+  PVs are specified as device paths, for example /dev/sdc, /dev/mapper/mpatha or /dev/sd*.
 
   Note that because pvvgname has to read from the given (block) devices directly, it has to be run as
   root or via sudo.
+
+  What is it good for? Well, under normal circumstances you would just use standard LVM2 commands like
+  pvdisplay(8) or pvs(8) to determine the VGs that arbitrary PVs belong to. 'Normal' here means that
+  there are no duplicate PV UUIDs present which would cause those commands to basically fail and return
+  irritating information. Situations like these can easily occur when disks are cloned in the storage
+  back-end or otherwise copied 1:1 on block-level. Because pvvgname reads the data directly from the
+  MDA stored on disk and doesn't require a valid VG structure (as most LVM2 commands do), it will still
+  be able to gather the correct information.
 
 EXIT STATUS
   0 - No error: The VG name is printed to stdout. The name can be empty if the PV is not
@@ -29,7 +39,7 @@ OPTIONS
   -v|--version  Prints the pvvgname version and exits
 
 SEE ALSO
-  lvm(8)
+  lvm(8), pvdisplay(8), pvs(8)
 
 BUGS
   None that we're aware of. Report any bugs you may find to the author's e-mail address below.
