@@ -2,7 +2,7 @@
 # Copyright (c) 2016-2018 SVA System Vertrieb Alexander GmbH
 
 Name:		pvvgname
-Version:	1.8
+Version:	1.9
 Release:	1
 License:	GPL-3.0
 Summary:	Reads the name of the VG that a PV belongs to directly from the MDA stored on disk 
