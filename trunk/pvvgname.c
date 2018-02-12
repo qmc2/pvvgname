@@ -129,7 +129,8 @@ int main(int argc, char **argv)
 							if ( long_output ) {
 								while ( *q++ != '\"' );
 								p = q;
-								while ( *q != '\"' ) q++;
+								while ( *q != '\"' )
+									q++;
 								int vg_uuid_len = q - p;
 								char vg_uuid[vg_uuid_len + 1];
 								strncpy(vg_uuid, p, vg_uuid_len);

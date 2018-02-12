@@ -1,3 +1,7 @@
+v1.8 / 12-FEB-2018
+
+- General makefile improvements
+
 v1.7 / 10-FEB-2018
 
 - Long output (-l / --long) will now also print the VG UUID (third
