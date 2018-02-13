@@ -52,10 +52,6 @@ int process_arguments(int argc, char **argv)
 	int c, option_index, retval = 1;
 	while ( retval && (c = getopt_long(argc, argv, "hvl", long_options, &option_index)) != -1 ) {
 		switch ( c ) {
-			case 'l':
-				long_output = 1;
-				break;
-
 			case 'h':
 				show_usage(argv);
 				return 0;
@@ -63,6 +59,10 @@ int process_arguments(int argc, char **argv)
 			case 'v':
 				show_version();
 				return 0;
+
+			case 'l':
+				long_output = 1;
+				break;
 
 			default:
 				break;
