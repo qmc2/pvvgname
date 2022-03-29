@@ -1,5 +1,5 @@
-# Spec file for package 'pvvgname'
-# Copyright (c) 2016 - 2022 rene.reucher@batcom-it.net
+# Spec file for the package 'pvvgname'
+# Copyright (C) 2016 - 2022 rene.reucher@batcom-it.net
 
 Name:		pvvgname
 Version:	1.10
