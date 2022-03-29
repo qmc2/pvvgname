@@ -1,5 +1,5 @@
-pvvgname - v1.9
----------------
+pvvgname - v1.10
+----------------
 
 This utility reads the name of the Linux LVM2 volume group (VG) that a physical
 volume (PV) belongs to directly from the metadata area (MDA) stored on disk,
@@ -88,7 +88,7 @@ information by following the on-disk MDA structure, although LVM2's commands
 License
 -------
 
-Copyright (C) 2016-2018 SVA System Vertrieb Alexander GmbH
+Copyright (C) 2016 - 2022 rene.reucher@batcom-it.net
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
@@ -105,4 +105,4 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 Author
 ------
 
-René Reucher (rene.reucher@sva.de)
+René Reucher (rene.reucher@batcom-it.net)

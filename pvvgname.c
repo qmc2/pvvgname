@@ -1,11 +1,9 @@
-// **********************************************************
+// ********************************************************
 // pvvgname - reads the name of the VG that a PV belongs to
 //            directly from the MDA stored on disk
 //
-// Copyright (C) 2016-2018 SVA System Vertrieb Alexander GmbH
-//
-// Author: René Reucher (rene.reucher@sva.de)
-// **********************************************************
+// Copyright (C) 2016 - 2022 rene.reucher@batcom-it.net
+// ********************************************************
 
 #define _GNU_SOURCE
 #include <stdio.h>
@@ -38,8 +36,13 @@ static struct option long_options[] = {
 
 void show_usage(char **argv)
 {
-	fprintf(stderr, "Usage: %s [-l|--long] <device> [<device> ...]\n"
-			"       %s [-h|--help] [-v|--version]\n", argv[0], argv[0]);
+	fprintf(stderr,
+		"Usage: %s [-l|--long] <device> [<device> ...]\n"
+		"       %s [-v|--version]\n"
+		"       %s [-h|--help]\n",
+		argv[0],
+		argv[0],
+		argv[0]);
 }
 
 void show_version()
