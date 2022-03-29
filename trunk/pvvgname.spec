@@ -1,8 +1,8 @@
 # Spec file for package 'pvvgname'
-# Copyright (c) 2016-2018 SVA System Vertrieb Alexander GmbH
+# Copyright (c) 2016 - 2022 rene.reucher@batcom-it.net
 
 Name:		pvvgname
-Version:	1.9
+Version:	1.10
 Release:	1
 License:	GPL-3.0
 Summary:	Reads the name of the VG that a PV belongs to directly from the MDA stored on disk 
