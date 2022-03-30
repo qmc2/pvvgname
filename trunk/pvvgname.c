@@ -38,9 +38,7 @@ void show_usage(char **argv)
 {
 	fprintf(stderr,
 		"Usage: %s [-l|--long] <device> [<device> ...]\n"
-		"       %s -v|--version\n"
-		"       %s -h|--help\n",
-		argv[0],
+		"       %s [-v|--version] [-h|--help]\n",
 		argv[0],
 		argv[0]);
 }

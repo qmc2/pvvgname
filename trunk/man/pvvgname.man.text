@@ -4,9 +4,7 @@ NAME
 SYNOPSIS
   pvvgname [-l|--long] device [device ...]
 
-  pvvgname -v|--version
-
-  pvvgname -h|--help
+  pvvgname [-v|--version] [-h|--help]
 
 DESCRIPTION
   This simple utility reads the names of the Linux LVM2 volume groups (VGs) that one or more physical
