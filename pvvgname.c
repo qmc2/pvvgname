@@ -52,16 +52,18 @@ void show_version()
 
 int process_arguments(int argc, char **argv)
 {
-	int c, option_index, retval = 1;
+	int c, option_index, help_or_version = 0, retval = 1;
 	while ( retval && (c = getopt_long(argc, argv, "hvl", long_options, &option_index)) != -1 ) {
 		switch ( c ) {
 			case 'h':
 				show_usage(argv);
-				return 0;
+				help_or_version = 1;
+				break;
 
 			case 'v':
 				show_version();
-				return 0;
+				help_or_version = 1;
+				break;
 
 			case 'l':
 				long_output = 1;
@@ -71,6 +73,8 @@ int process_arguments(int argc, char **argv)
 				break;
 		}
 	}
+	if ( help_or_version )
+		return 0;
 	number_of_block_devices = argc - optind;
 	if ( number_of_block_devices > 0 ) {
 		block_device_names = (char **)malloc(sizeof(char *) * number_of_block_devices);
