@@ -92,8 +92,7 @@ int process_arguments(int argc, char **argv)
 void clean_up()
 {
 	if ( block_device_names ) {
-		int i;
-		for (i = 0; i < number_of_block_devices; i++)
+		for (int i = 0; i < number_of_block_devices; i++)
 			free(block_device_names[i]);
 		free(block_device_names);
 	}
@@ -106,8 +105,7 @@ int main(int argc, char **argv)
 		return 1;
 	}
 	int rc = 0;
-	int index;
-	for (index = 0; index < number_of_block_devices; index++) {
+	for (int index = 0; index < number_of_block_devices; index++) {
 		FILE *f = fopen(block_device_names[index], "r");
 		if ( f ) {
 			char buffer[BUFFER_SIZE];
