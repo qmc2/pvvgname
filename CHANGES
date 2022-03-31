@@ -1,9 +1,8 @@
-v1.10 / 30-MAR-2022
+v1.10 / 31-MAR-2022
 
 - Adjusted contact e-mail address
 - Changed the usage help
-- Modified the synopsis in the manual page
-- Changed option parsing so that -vh or -hv also works
+- Changed option parsing so that -vh or -hv also work
 
 v1.9 / 12-FEB-2018
 
